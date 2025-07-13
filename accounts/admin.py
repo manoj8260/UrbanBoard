@@ -1,3 +1,28 @@
 from django.contrib import admin
-
+from accounts.models import User ,Profile
+from django.contrib.auth.admin import UserAdmin
 # Register your models here.
+
+class UserModelAdmin(UserAdmin):
+    model = User
+    list_display = ['id','email','username','phone','is_active','is_staff','is_superuser','is_landlord','is_boarder']
+    list_filter =['is_superuser']
+    search_fields = ['email','phone']
+    ordering = ['id','email']
+    filter_horizontal = ()
+    readonly_fields =['date_joined','date_updated']
+
+    fieldsets = (
+        ('User Credentials', {'fields': ('email', 'password')}),
+        ('Personal Info', {'fields': ('username', 'phone',)}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_landlord', 'is_boarder')}),
+        ('Important dates', {'fields': ('last_login','date_joined', 'date_updated' )}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
+admin.site.register(User,UserModelAdmin)
+admin.site.register(Profile)    
