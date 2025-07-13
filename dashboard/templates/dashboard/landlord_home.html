@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Landlord
+{% endblock title %}
+
+
+{% block content %}
+<h1>Welcome, Landlord {{request.user.email}}</h1>
+<form action="" method='post'>
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button type="submit">submit</button>
+</form>
+<hr>
+<h1>Your PG listings:</h1>
+{% if user_PGs %}
+    {% for pg in user_PGs %}
+        <div>
+            <strong>{{pg.title}}</strong><br>
+            Location:{{pg.location}} <br>
+            Rent: {{pg.rent}} <br>
+            Sharing Type:{{pg.sharing_type}} <br>
+            Room Type:{{pg.room_type}} <br>
+            Facilities:{{pg.facilities}} <br>
+            Posted On: {{pg.created_at|date:"d M Y H:i"}}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>You haven't Posted Any PG</p>
+{% endif %}
+{% endblock content %}

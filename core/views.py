@@ -1,0 +1,51 @@
+from django.shortcuts import render,redirect
+from .models import User
+from .forms import Signupform,Loginform
+from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+# Create your views here.
+def Signup(request):
+    if request.method=='POST':
+        form=Signupform(request.POST)
+        if form.is_valid():
+            user=form.save(commit=False)
+            raw_pass=form.cleaned_data.get('password')
+            user.set_password(raw_pass)
+            user.is_active=True
+            user.save()
+            messages.success(request,'Successfully registered..')
+            return redirect('login')
+    else:
+        form=Signupform()
+    return render(request,'core/signup.html',{'form':form})
+
+def Login(request):
+    if request.method=='POST':
+        form=Loginform(request.POST)
+        if form.is_valid():
+            email=form.cleaned_data.get('email')
+            password=form.cleaned_data.get('password')
+            user=authenticate(request,username=email,password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request,'user logined...')
+                if user.is_landlord:
+                    return redirect('landlord_dashboard')
+                elif user.is_boarder:
+                    return redirect('boarder_dashboard')
+                else:
+                    return redirect('home')
+            else:
+                form.add_error(None,'wrong email or password')
+    else:
+        form=Loginform()
+    return render(request,'core/login.html',{'form':form})
+@login_required
+def Logout(request):
+    logout(request)
+    return redirect('signup')
+@login_required
+def home(request):
+    
+    return render(request,'core/home.html')

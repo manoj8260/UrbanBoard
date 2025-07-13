@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block title %}Signup{% endblock title %}
+
+{% block content %}
+<fieldset>
+    <legend>Signup</legend>
+    <form action="" method='post'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="submit"><br><br><a href="{% url "login" %}">Already have an Account?</a>
+    </form>
+</fieldset>
+{% endblock content %}
