@@ -18,7 +18,7 @@ def Signup(request):
             return redirect('login')
     else:
         form=Signupform()
-    return render(request,'core/signup.html',{'form':form})
+    return render(request,'accounts/signup.html',{'form':form})
 
 def Login(request):
     if request.method=='POST':
@@ -40,7 +40,7 @@ def Login(request):
                 form.add_error(None,'wrong email or password')
     else:
         form=Loginform()
-    return render(request,'core/login.html',{'form':form})
+    return render(request,'accounts/signin.html',{'form':form})
 @login_required
 def Logout(request):
     logout(request)
@@ -48,4 +48,4 @@ def Logout(request):
 @login_required
 def home(request):
     
-    return render(request,'core/home.html')
+    return render(request,'accounts/home.html')
