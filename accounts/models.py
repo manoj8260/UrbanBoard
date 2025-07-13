@@ -31,18 +31,22 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 class User(AbstractBaseUser):
+    class Role(models.TextChoices):
+        LANDLORD = 'landlord', 'Landlord'
+        BOARDER = 'boarder', 'Boarder'
+
     def validate_phone(value):
         pattern = r'^[6-9]\d{9}$'  # Indian 10-digit mobile starting with 6-9
         if not re.match(pattern, value):
            raise ValidationError("Enter a valid 10-digit Indian phone number.")
+        
     email=models.EmailField(max_length=200,unique=True)
     phone=models.CharField(max_length=15,verbose_name= 'Phone Number', unique=True,validators=[validate_phone])
     username=models.CharField(max_length=200,null=True,blank=True)
     is_staff=models.BooleanField(default=False)
     is_active=models.BooleanField(default=False)
     is_superuser=models.BooleanField(default=False)
-    is_landlord=models.BooleanField(default=False)
-    is_boarder=models.BooleanField(default=False)
+    role = models.CharField(max_length=50,choices=Role.choices,default=Role.BOARDER)
     date_joined = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
