@@ -2,7 +2,7 @@ from django.contrib import admin
 from accounts.models import User ,Profile
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
-
+print('hello')
 class UserModelAdmin(UserAdmin):
     model = User
     list_display = ['id','email','username','phone','is_active','is_staff','is_superuser',]
