@@ -30,9 +30,9 @@ def Login(request):
             if user is not None:
                 login(request,user)
                 messages.success(request,'user logined...')
-                if user.is_landlord:
+                if user.role=='landlord':
                     return redirect('landlord_dashboard')
-                elif user.is_boarder:
+                elif user.role=='boarder':
                     return redirect('boarder_dashboard')
                 else:
                     return redirect('home')
