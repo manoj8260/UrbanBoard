@@ -38,7 +38,7 @@ class User(AbstractBaseUser):
     def validate_phone(value):
         pattern = r'^[6-9]\d{9}$'  # Indian 10-digit mobile starting with 6-9
         if not re.match(pattern, value):
-           raise ValidationError("Enter a valid 10-digit Indian phone number.")
+            raise ValidationError("Enter a valid 10-digit Indian phone number.")
         
     email=models.EmailField(max_length=200,unique=True)
     phone=models.CharField(max_length=15,verbose_name= 'Phone Number', unique=True,validators=[validate_phone])
