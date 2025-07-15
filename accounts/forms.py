@@ -3,12 +3,12 @@ from .models import User
 from django.core.exceptions import ValidationError
 class Signupform(forms.ModelForm):
     confirm_password=forms.CharField(
-         help_text =' Password must match the one above.',
-         widget=forms.PasswordInput(
-         attrs={
-              'placeholder' : 'Confirm Password'
-              
-         }
+        help_text =' Password must match the one above.',
+        widget=forms.PasswordInput(
+        attrs={
+            'placeholder' : 'Confirm Password'
+            
+        }
     ))
     class Meta:
         model=User
