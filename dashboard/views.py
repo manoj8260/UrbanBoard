@@ -15,6 +15,7 @@ def landlord_dashboard(request):
                 pg=form.save(commit=False)
                 pg.owner=request.user
                 pg.save()
+                form=PGlistingform()
 
         else:
             form=PGlistingform()
