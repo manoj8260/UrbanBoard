@@ -4,6 +4,8 @@ from .forms import Signupform,LoginForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from core.utils import assign_permission
+
 # Create your views here.
 def Signup(request):
     if request.method=='POST':
@@ -13,9 +15,11 @@ def Signup(request):
             raw_pass=form.cleaned_data.get('password')
             user.set_password(raw_pass)
             user.is_active=True
+            role = form.cleaned_data.get('role')
             user.save()
+            assign_permission(user,role)
             messages.success(request,'Successfully registered..')
-            return redirect('login')
+            return redirect('signin')
     else:
         form=Signupform()
     return render(request,'accounts/signup.html',{'form':form})

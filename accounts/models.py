@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager ,PermissionsMixin
 import re
 from django.core.exceptions import ValidationError
 
@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
 
         user.save(using=self._db)
         return user
-class User(AbstractBaseUser):
+class User(AbstractBaseUser,PermissionsMixin):
     class Role(models.TextChoices):
         LANDLORD = 'landlord', 'Landlord'
         BOARDER = 'boarder', 'Boarder'
@@ -57,9 +57,14 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
     def has_perm(self,perm,obj=None):
-        return self.is_superuser
+        if self.is_superuser:
+            return True
+        return super().has_perm(perm,obj)
+    
     def has_module_perms(self,app_label):
-        return self.is_superuser
+        if self.is_superuser:
+            return True
+        return super().has_module_perms(app_label)
     
     class Meta:
         verbose_name = "User"

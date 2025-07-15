@@ -9,14 +9,14 @@ class UserModelAdmin(UserAdmin):
     list_filter =['is_superuser']
     search_fields = ['email','phone']
     ordering = ['id','email']
-    filter_horizontal = ()
+    filter_horizontal = ('groups','user_permissions')
     readonly_fields =['date_joined','date_updated']
 
     fieldsets = (
         ('User Credentials', {'fields': ('email', 'password')}),
         ('Personal Info', {'fields': ('username', 'phone','role')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-        ('Important dates', {'fields': ('last_login','date_joined', 'date_updated' )}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups' ,'user_permissions')}),
+        ('Important dates', {'fields': ('last_login','date_joined', 'date_updated' )},),
     )
     add_fieldsets = (
         (None, {
