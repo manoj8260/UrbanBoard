@@ -15,18 +15,17 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.html import strip_tags
-
 def password_reset_request(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data.get('email')
-            user = User.objects.get(email = email)
-            current_site = get_current_site(request)
-            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-            token = default_token_generator.make_token(user)
-            current_site = get_current_site(request)
-            context = {
+            try:
+                user = User.objects.get(email=email)
+                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+                token = default_token_generator.make_token(user)
+                current_site = get_current_site(request)
+                context = {
                     "email": user.email,
                     "domain": current_site.domain,
                     "site_name": "UrbanBoard",
@@ -35,22 +34,31 @@ def password_reset_request(request):
                     "token": token,
                     "protocol": "https" if request.is_secure() else "http",
                 }
-            html_message = render_to_string(r"email/password_reset_email.html",context)
-            plain_message = strip_tags(html_message)
-            subject = "🔐 Reset Your Password"
-            from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = [user.email]
-            email = EmailMultiAlternatives(
-                subject=subject,
-                body = plain_message,
-                from_email= from_email,
-                to = to_email                     
-            )
-            email.attach_alternative(html_message,'text/html')
-            email.send()
-        return  redirect('password_reset_done')
-    form = PasswordResetForm()
-    return render(request, "email/password_reset.html", {"form": form})
+                html_message = render_to_string("email/password_reset_email.html", context)
+                plain_message = strip_tags(html_message)
+                subject = "🔐 Reset Your Password"
+                from_email = settings.DEFAULT_FROM_EMAIL
+                to_email = [user.email]
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body=plain_message,
+                    from_email=from_email,
+                    to=to_email                     
+                )
+                email.attach_alternative(html_message, 'text/html')
+                email.send()
+            except User.DoesNotExist:
+                pass  # Don’t reveal whether email exists
+
+            messages.success(request, "If an account exists with the email you entered, you'll receive password reset instructions shortly.")         
+            return redirect('password_reset_done')
+        
+        # ⬇️ Handles invalid form (e.g., empty email, bad format)
+        return render(request, "email/password_reset.html", {"form": form})
+
+    else:          
+        form = PasswordResetForm()
+        return render(request, "email/password_reset.html", {"form": form})
 
 
 def password_reset_confirm(request, uidb64, token):
