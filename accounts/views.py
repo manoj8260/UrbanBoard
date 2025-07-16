@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
 from .models import User
 from .forms import Signupform,LoginForm
 from django.contrib.auth import login,logout,authenticate
@@ -15,6 +15,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.html import strip_tags
+from accounts.emails import send_activation_email
+
 def password_reset_request(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
@@ -67,7 +69,6 @@ def password_reset_confirm(request, uidb64, token):
         user = User.objects.get(pk=uid)
     except (User.DoesNotExist, TypeError, ValueError, OverflowError):
         user = None
-
     if user and default_token_generator.check_token(user, token):
         if request.method == 'POST':
             form = SetPasswordForm(user, request.POST)
@@ -80,12 +81,6 @@ def password_reset_confirm(request, uidb64, token):
     
     # Invalid or expired link
     return render(request, 'email/password_reset_invalid.html')
-
-                
-        
-        
-    
-    
     
 def password_reset_done(request):
     return render(request, "email/password_reset_done.html")
@@ -95,12 +90,7 @@ def password_reset_complete(request):
     return render(request, "email/password_reset_complete.html")
 
             
-            
-            
-            
         
-        
-    
     
 # Create your views here.
 def Signup(request):
@@ -110,12 +100,12 @@ def Signup(request):
             user=form.save(commit=False)
             raw_pass=form.cleaned_data.get('password')
             user.set_password(raw_pass)
-            user.is_active=True
             role = form.cleaned_data.get('role')
             user.save()
             assign_permission(user,role)
+            send_activation_email(user)
             messages.success(request,'Successfully registered..')
-            return redirect('signin')
+            return render(request,'accounts/activation_pending.html')
     else:
         form=Signupform()
     return render(request,'accounts/signup.html',{'form':form})
@@ -149,6 +139,18 @@ def Logout(request):
     return redirect('signup')
 
 @login_required
-def home(request):    
+def home(request):
+    
     return render(request,'accounts/home.html')
 
+def activate_account(request,user_id):
+    user=get_object_or_404(User,id=user_id)
+    try:
+        if not user.is_active:
+            user.is_active=True
+            user.save()
+            return render(request,'accounts/account_activate.html',{'role':user.role})
+        else:
+            return HttpResponse('Your Account is Activated')
+    except User.DoesNotExist:
+        return HttpResponse('Activation failed...invalid user , try again.')

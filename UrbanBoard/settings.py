@@ -136,12 +136,11 @@ AUTH_USER_MODEL='accounts.User'
 # LOGIN_URL = 'login'
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER='kumarmanoj8260910@gmail.com'
-EMAIL_HOST_PASSWORD='nyiy obth eofo qskm'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
 EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'lalitsahoo105@gmail.com'
+EMAIL_HOST_PASSWORD = 'vnnv zejw fvmz hogm'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-SESSION_COOKIE_AGE = 455500
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Activated</title>
+</head>
+<body>
+    <h2>Account Activated Successfully!</h2>
+    <p>
+        <a href="{% url 'signin' %}">
+            <button>Login Now</button>
+        </a>
+    </p>
+
+    {% if role == 'landlord' %}
+        <p><small>You will be redirected to the Landlord Dashboard after login.</small></p>
+    {% else %}
+        <p><small>You will be redirected to the Boarder Dashboard after login.</small></p>
+    {% endif %}
+</body>
+</html>
