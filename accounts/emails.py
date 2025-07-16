@@ -3,7 +3,7 @@ from django.conf import settings
 
 def send_activation_email(user):
     subject = 'Activate your UrbanBoard account'
-    activation_link = f"http://127.0.0.1:8000/accounts/activate/{user.id}/"
+    activation_link = f"http://127.0.0.1:8000/activate/{user.id}/"
 
     message = f"""
     Hello {user.username},
