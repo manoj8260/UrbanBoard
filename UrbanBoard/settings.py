@@ -134,3 +134,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL='accounts.User'
 # LOGOUT_REDIRECT_URL = 'login'
 # LOGIN_URL = 'login'
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER='kumarmanoj8260910@gmail.com'
+EMAIL_HOST_PASSWORD='nyiy obth eofo qskm'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+
+SESSION_COOKIE_AGE = 455500
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

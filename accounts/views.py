@@ -1,11 +1,107 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from .models import User
 from .forms import Signupform,LoginForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from core.utils import assign_permission
+# for forget password
+from django.contrib.auth.forms import PasswordResetForm,SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.utils.html import strip_tags
+def password_reset_request(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            try:
+                user = User.objects.get(email=email)
+                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+                token = default_token_generator.make_token(user)
+                current_site = get_current_site(request)
+                context = {
+                    "email": user.email,
+                    "domain": current_site.domain,
+                    "site_name": "UrbanBoard",
+                    "uid": uidb64,
+                    "user": user,
+                    "token": token,
+                    "protocol": "https" if request.is_secure() else "http",
+                }
+                html_message = render_to_string("email/password_reset_email.html", context)
+                plain_message = strip_tags(html_message)
+                subject = "🔐 Reset Your Password"
+                from_email = settings.DEFAULT_FROM_EMAIL
+                to_email = [user.email]
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body=plain_message,
+                    from_email=from_email,
+                    to=to_email                     
+                )
+                email.attach_alternative(html_message, 'text/html')
+                email.send()
+            except User.DoesNotExist:
+                pass  # Don’t reveal whether email exists
 
+            messages.success(request, "If an account exists with the email you entered, you'll receive password reset instructions shortly.")         
+            return redirect('password_reset_done')
+        
+        # ⬇️ Handles invalid form (e.g., empty email, bad format)
+        return render(request, "email/password_reset.html", {"form": form})
+
+    else:          
+        form = PasswordResetForm()
+        return render(request, "email/password_reset.html", {"form": form})
+
+
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (User.DoesNotExist, TypeError, ValueError, OverflowError):
+        user = None
+
+    if user and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('password_reset_complete')
+        else:
+            form = SetPasswordForm(user)
+        return render(request, 'email/password_reset_confirm.html', {'form': form})
+    
+    # Invalid or expired link
+    return render(request, 'email/password_reset_invalid.html')
+
+                
+        
+        
+    
+    
+    
+def password_reset_done(request):
+    return render(request, "email/password_reset_done.html")
+
+
+def password_reset_complete(request):
+    return render(request, "email/password_reset_complete.html")
+
+            
+            
+            
+            
+        
+        
+    
+    
 # Create your views here.
 def Signup(request):
     if request.method=='POST':
@@ -53,6 +149,6 @@ def Logout(request):
     return redirect('signup')
 
 @login_required
-def home(request):
-    
+def home(request):    
     return render(request,'accounts/home.html')
+
