@@ -12,6 +12,6 @@ urlpatterns = [
     path("reset/<uidb64>/<token>/", password_reset_confirm, name="password_reset_confirm"),
     path("reset/done/", password_reset_complete, name="password_reset_complete"),
 
-    path('activate/<int:user_id>/',activate_account,name='activate_account'),
+    path('activate/<uidb64>/',activate_account,name='activate_account'),
 
 ]
