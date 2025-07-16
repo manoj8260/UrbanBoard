@@ -12,7 +12,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Both email and phone number must be provided.')
         user=self.model(email=self.normalize_email(email),phone = phone,**extra_fields)
         user.set_password(password)
-        # user.is_active=True
+        user.is_active=False
         user.save(using=self._db)
         return user
     def create_superuser(self,email,phone,password=None,**extra_fields):

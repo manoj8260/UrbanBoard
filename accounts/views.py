@@ -139,11 +139,11 @@ def Logout(request):
     return redirect('signup')
 
 @login_required
-def home(request):
-    
+def home(request):   
     return render(request,'accounts/home.html')
 
-def activate_account(request,user_id):
+def activate_account(request,uidb64):
+    user_id = urlsafe_base64_decode(uidb64).decode()
     user=get_object_or_404(User,id=user_id)
     try:
         if not user.is_active:
