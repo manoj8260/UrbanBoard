@@ -23,4 +23,5 @@ def landlord_dashboard(request):
         return render(request,'dashboard/landlord_home.html',{'form':form,'user_PGs':user_PGs})
 @login_required
 def boarder_dashboard(request):
-    return render(request,'dashboard/boarder_home.html')
+    all_PGs=PGlisting.objects.all().order_by('-created_at')
+    return render(request,'dashboard/boarder_home.html',{'all_PGs':all_PGs})

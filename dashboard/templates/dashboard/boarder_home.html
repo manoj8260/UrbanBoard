@@ -7,4 +7,17 @@ Boarder
 
 {% block content %}
 <h1>Welcome, Boarder {{request.user.email}}</h1>
+<hr>
+<h1>Available PG Listings</h1>
+{% if all_PGs %}
+    {% for pg in all_PGs %}
+        <div>
+            <h3>{{pg.name}}</h3>
+            <p>Location: {{pg.location}}</p>
+            <p>Rent: {{pg.rent}}</p>
+        </div>
+    {% endfor %}
+    {% else %}
+        <p>No PGs available right now</p>
+{% endif %}
 {% endblock content %}
