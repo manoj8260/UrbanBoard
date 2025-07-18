@@ -55,7 +55,7 @@ def password_reset_request(request):
             messages.success(request, "If an account exists with the email you entered, you'll receive password reset instructions shortly.")         
             return redirect('password_reset_done')
         
-        # ⬇️ Handles invalid form (e.g., empty email, bad format)
+        # Handles invalid form (e.g., empty email, bad format)
         return render(request, "email/password_reset.html", {"form": form})
 
     else:          
@@ -89,9 +89,7 @@ def password_reset_done(request):
 def password_reset_complete(request):
     return render(request, "email/password_reset_complete.html")
 
-            
-        
-    
+
 # Create your views here.
 def Signup(request):
     if request.method=='POST':
