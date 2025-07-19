@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from urbanstay.forms import FlatFrom , INDIAN_STATES_CITIES
+from urbanstay.forms import FlatFrom,INDIAN_STATES_CITIES
 from urbanstay.models import Flat
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden,JsonResponse
