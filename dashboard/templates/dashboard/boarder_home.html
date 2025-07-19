@@ -7,17 +7,27 @@ Boarder
 
 {% block content %}
 <h1>Welcome, Boarder {{request.user.email}}</h1>
+<h2>Available Flats:-</h2>
 <hr>
-<h1>Available PG Listings</h1>
-{% if all_PGs %}
-    {% for pg in all_PGs %}
-        <div>
-            <h3>{{pg.name}}</h3>
-            <p>Location: {{pg.location}}</p>
-            <p>Rent: {{pg.rent}}</p>
-        </div>
-    {% endfor %}
-    {% else %}
-        <p>No PGs available right now</p>
+
+{% if all_flats %}
+    <div class="flats-container">
+        {% for flat in all_flats %}
+            <div class="flat-card">
+                <h3>{{ flat.title }}</h3>
+                <p><strong>City:</strong> {{ flat.city }}, {{ flat.state }}</p>
+                <p><strong>BHK:</strong> {{ flat.get_bhk_display }}</p>
+                <p><strong>Furnishing:</strong> {{ flat.get_furnishing_display }}</p>
+                <p><strong>Rent:</strong> ₹{{ flat.rent }}</p>
+                <p><strong>Available From:</strong> {{ flat.available_from }}</p>
+                {% if flat.image %}
+                    <img src="{{ flat.image.url }}" alt="Flat Image" width="200">
+                {% endif %}
+                <button type="submit"><a href="{% url "book_flat" %}">Book Now</a></button>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No flats listed yet.</p>
 {% endif %}
 {% endblock content %}
