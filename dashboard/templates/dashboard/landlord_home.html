@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{%load static %}
 {% block title %}
 Landlord
 {% endblock title %}
@@ -7,27 +7,33 @@ Landlord
 
 {% block content %}
 <h1>Welcome, Landlord {{request.user.email}}</h1>
-<form action="" method='post'>
-    {% csrf_token %}
-    {{form.as_p}}
+ <a href="{%url 'create_flat_listing' %}"><button>ADD FLAT</button></a>
+ 
+{%if user_flats%}
+  {%for flat in user_flats%}
+    <div class="card" style="width: 18rem;">
+      
 
-    <button type="submit">submit</button>
-</form>
-<hr>
-<h1>Your PG listings:</h1>
-{% if user_PGs %}
-    {% for pg in user_PGs %}
-        <div>
-            <strong>{{pg.title}}</strong><br>
-            Location:{{pg.location}} <br>
-            Rent: {{pg.rent}} <br>
-            Sharing Type:{{pg.sharing_type}} <br>
-            Room Type:{{pg.room_type}} <br>
-            Facilities:{{pg.facilities}} <br>
-            Posted On: {{pg.created_at|date:"d M Y H:i"}}
-        </div>
-    {% endfor %}
+{% if flat.image %}
+    <img src="{{ flat.image.url }}" class="card-img-top" alt="Flat image">
 {% else %}
-    <p>You haven't Posted Any PG</p>
+    <img src="{% static 'images/default-flat-image.jpg' %}" class="card-img-top" alt="No image available">
 {% endif %}
+
+      <div class="card-body">
+        <h5 class="card-title">{{flat.title}}</h5>
+        <p class="card-text">{{flat.description}}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{flat.listed_by}}</li>
+        <li class="list-group-item">{{flat.rent}}</li>
+        <li class="list-group-item">{{flat.listed_on}}</li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+      </div>
+    </div>
+  {%endfor%}  
+{%endif%}
 {% endblock content %}

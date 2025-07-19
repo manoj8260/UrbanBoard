@@ -1,10 +1,10 @@
-from PG.models import PGlisting
+from urbanstay.models import Flat
 
 PERMISSION_CONFIG = {
     'boarder' :{
-        PGlisting : ['view',],      
+        Flat : ['view',],      
     } ,
     'landlord' :{
-        PGlisting :['view','add','change',]
+        Flat :['view','add','change',]
     } ,    
 }
