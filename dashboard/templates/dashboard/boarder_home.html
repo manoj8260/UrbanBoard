@@ -23,7 +23,7 @@ Boarder
                 {% if flat.image %}
                     <img src="{{ flat.image.url }}" alt="Flat Image" width="200">
                 {% endif %}
-                <button type="submit"><a href="{% url "book_flat" %}">Book Now</a></button>
+                <button type="submit"><a href="{% url "book_flat" flat.id %}">Book Now</a></button>
             </div>
         {% endfor %}
     </div>

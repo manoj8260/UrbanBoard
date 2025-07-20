@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from urbanstay.forms import FlatFrom,INDIAN_STATES_CITIES
-from urbanstay.models import Flat
+from urbanstay.models import Flat,Booking
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden,JsonResponse
 from django.contrib import messages
@@ -40,4 +40,9 @@ def load_cities(request):
 @login_required
 def book_flat(request,flat_id):
         flat=get_object_or_404(Flat,id=flat_id)
+        if Booking.objects.filter(flat=flat,boarder=request.user).exists():
+                messages.warning(request,'You have already requested this Flat')
+        else:
+            Booking.objects.create(flat=flat,boarder=request.user)
+            messages.success(request,'Your booking request has been sent!')
         return render(request,'dashboard/booking_successful.html',{'flat':flat})
