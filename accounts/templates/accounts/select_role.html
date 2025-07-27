@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Select Role{% endblock title %}
+
+{% block content %}
+<form method="post">
+        {% csrf_token %}
+        <label>
+            <input type="radio" name="role" value="landlord"> Landlord
+        </label><br>
+
+        <label>
+            <input type="radio" name="role" value="boarder"> Boarder
+        </label><br><br>
+
+        <button type="submit">Continue</button>
+    </form>
+{% endblock content %}
