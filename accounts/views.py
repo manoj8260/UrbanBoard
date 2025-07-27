@@ -152,3 +152,27 @@ def activate_account(request,uidb64):
             return HttpResponse('Your Account is Activated')
     except User.DoesNotExist:
         return HttpResponse('Activation failed...invalid user , try again.')
+
+@login_required
+def google_role_redirect(request):
+    user=request.user
+    if user.is_landlord:
+        return redirect('landlord_dashboard')
+    elif user.is_boarder:
+        return redirect('boarder_dashboard')
+    else:
+        return redirect('select_role')
+def select_role_after_gLogin(request):
+    user=request.user
+    if request.method=='POST':
+        selected_role=request.POST.get('role')
+        if selected_role=='Landlord':
+            user.is_landlord=True
+            return redirect('landlord_dashboard')
+        elif selected_role=='Boarder':
+            user.is_boarder=True
+            return redirect('boarder_dashboard')
+        else:
+            messages.error(request,'Please select a Preffered Role.')
+            return redirect('select_role')
+    return render(request,'accounts/select_role.html')
