@@ -153,26 +153,31 @@ def activate_account(request,uidb64):
     except User.DoesNotExist:
         return HttpResponse('Activation failed...invalid user , try again.')
 
+
+
 @login_required
 def google_role_redirect(request):
-    user=request.user
-    if user.is_landlord:
+    user = request.user
+    if not user.role:
+        return redirect('select_role')
+    
+    # Redirect based on role
+    if user.role == 'Landlord':
         return redirect('landlord_dashboard')
-    elif user.is_boarder:
+    elif user.role == 'Boarder':
         return redirect('boarder_dashboard')
     else:
         return redirect('select_role')
-def select_role_after_gLogin(request):
-    user=request.user
-    if request.method=='POST':
-        selected_role=request.POST.get('role')
-        if selected_role=='Landlord':
-            user.is_landlord=True
-            return redirect('landlord_dashboard')
-        elif selected_role=='Boarder':
-            user.is_boarder=True
-            return redirect('boarder_dashboard')
+
+@login_required
+def select_role(request):
+    user = request.user
+    if request.method == 'POST':
+        role = request.POST.get('role')
+        if role in ['Landlord', 'Boarder']:
+            user.role = role
+            user.save()
+            return redirect('landlord_dashboard' if role == 'Landlord' else 'boarder_dashboard')
         else:
-            messages.error(request,'Please select a Preffered Role.')
-            return redirect('select_role')
-    return render(request,'accounts/select_role.html')
+            messages.error(request, "Please select a valid role.")
+    return render(request, 'accounts/select_role.html')    

@@ -8,7 +8,7 @@ from django.contrib import messages
 # Create your views here.
 @login_required
 def landlord_dashboard(request):
-        if request.user.role!='landlord':
+        if request.user.role!='Landlord':
             return HttpResponseForbidden('Only landlords can add PG listing:')
         else:
             form=FlatFrom()
