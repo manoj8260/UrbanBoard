@@ -1,6 +1,7 @@
 from django.urls import path
 from accounts.views import Signup,Signin,home,Logout ,password_reset_request,password_reset_done,password_reset_complete,password_reset_confirm,google_role_redirect,select_role
 from .views import Signup,Signin,home,Logout,activate_account
+from .views import clear_sesion
 urlpatterns = [
     path('',Signup,name='signup'),
     path('login/',Signin,name='signin'),
@@ -15,5 +16,6 @@ urlpatterns = [
     path("reset/done/", password_reset_complete, name="password_reset_complete"),
 
     path('activate/<uidb64>/',activate_account,name='activate_account'),
+    path('clear/',clear_sesion)
 
 ]

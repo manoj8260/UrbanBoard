@@ -181,3 +181,7 @@ def select_role(request):
         else:
             messages.error(request, "Please select a valid role.")
     return render(request, 'accounts/select_role.html')    
+
+def clear_sesion(request):
+    request.session.flush()
+    return HttpResponse('done')

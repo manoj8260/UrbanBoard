@@ -1,21 +1,13 @@
-from django.contrib.auth import get_user_model
+from accounts.emails import send_activation_email
 
-User = get_user_model()
+def send_google_email(strategy, details,user = None , is_new = False,*args,**kwargs):
+    print(user)
+    if user and is_new and user.email  :
+        # print("Welcome email being sent to:", user.email)
+        # print("Strategy request data:", strategy.request_data())
+        # print("User details from Google:", details)
+        atenticate_type = 'google' 
+        return  send_activation_email(user,atenticate_type=atenticate_type)
 
-def get_or_create_user(strategy, details, backend, uid, user=None, *args, **kwargs):
-    if user:
-        return {'user': user}
-
-    email = details.get('email')
-
-    if email:
-        email = email.lower().strip()  # Normalize email
-
-        try:
-            user = User.objects.get(email=email)
-            return {'user': user}
-        except User.DoesNotExist:
-            user = strategy.create_user(email=email)
-            return {'user': user}
+        
     
-    return {}
