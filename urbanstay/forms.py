@@ -91,3 +91,8 @@ class FlatFrom(forms.ModelForm):
                 self.fields['city'].choices = [(city, city) for city in INDIAN_STATES_CITIES[self.instance.state]]
             except (KeyError, TypeError):
                  self.fields['city'].choices = [('Select', 'Select')]
+
+class FlatEditForm(forms.ModelForm):
+    class Meta: 
+        model = Flat
+        exclude = ['listed_by', 'listed_on', 'updated_on']

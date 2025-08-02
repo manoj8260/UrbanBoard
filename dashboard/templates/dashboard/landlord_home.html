@@ -30,8 +30,9 @@ Landlord
         <li class="list-group-item">{{flat.listed_on}}</li>
       </ul>
       <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <a href="{%url 'flat_detail' flat.pk %}"><button>Details</button></a>
+        <a href="{%url 'flat_edit'  flat.pk %}"><button>Edit</button></a>
+       <a href="{%url 'flat_delete' flat.pk %}"> <button>delete</button></a>
       </div>
     </div>
   {%endfor%}  

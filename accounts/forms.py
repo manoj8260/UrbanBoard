@@ -12,7 +12,7 @@ class Signupform(forms.ModelForm):
     ))
     class Meta:
         model=User
-        fields=('email','username','phone','password','role')
+        fields=('email','phone','password','role')
         widgets = {
             'password': forms.PasswordInput(attrs={'placeholder': 'Password'}),
         }

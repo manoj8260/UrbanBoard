@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Flat
+{% endblock title %}
+
+{% block content %}
+  <h2>Are you sure you want to delete "{{ flat.title }}"?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'landlord_dashboard' %}">Cancel</a>
+  </form>
+{% endblock content %}

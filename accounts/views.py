@@ -97,8 +97,10 @@ def Signup(request):
         if form.is_valid():
             user=form.save(commit=False)
             raw_pass=form.cleaned_data.get('password')
+            username = form.cleaned_data.get('email').split('@')[0]
             user.set_password(raw_pass)
             role = form.cleaned_data.get('role')
+            user.username = username
             user.save()
             assign_permission(user,role)
             send_activation_email(user)
