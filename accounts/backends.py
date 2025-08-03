@@ -6,6 +6,7 @@ User = get_user_model()
 
 class  EmailOrPhoneBackend(ModelBackend):
     def authenticate(self, request, username = None, password = None, **kwargs):
+        print(username,'-')
         try:
             user = User.objects.filter(Q(email__iexact = username) | Q(phone__iexact = username)).first()
             print(user)

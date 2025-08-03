@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Flat
+{% endblock title %}
+
+{% block content %}
+<h2>{{ flat.title }}</h2>
+  
+  {% if flat.image %}
+    <img src="{{ flat.image.url }}" alt="Flat Image" width="400">
+  {% endif %}
+
+  <p><strong>Description:</strong> {{ flat.description }}</p>
+  <p><strong>BHK:</strong> {{ flat.get_bhk_display }}</p>
+  <p><strong>Bathrooms:</strong> {{ flat.bathrooms }}</p>
+  <p><strong>Furnishing:</strong> {{ flat.get_furnishing_display }}</p>
+  <p><strong>Area:</strong> {{ flat.area_sqft }} sqft</p>
+  <p><strong>Rent:</strong> ₹{{ flat.rent }}</p>
+  <p><strong>Deposit:</strong> ₹{{ flat.deposit }}</p>
+  <p><strong>Available from:</strong> {{ flat.available_from }}</p>
+  <p><strong>Availability:</strong> {{ flat.is_available|yesno:"Available,Not Available" }}</p>
+
+  <h3>Location</h3>
+  <p>{{ flat.address }}, {{ flat.city }}, {{ flat.state }} - {{ flat.pincode }}</p>
+
+  <h3>Amenities</h3>
+  <ul>
+    {% if flat.parking %}<li>Parking</li>{% endif %}
+    {% if flat.lift %}<li>Lift</li>{% endif %}
+    {% if flat.security %}<li>Security</li>{% endif %}
+    {% if flat.power_backup %}<li>Power Backup</li>{% endif %}
+    {% if flat.gym %}<li>Gym</li>{% endif %}
+    {% if flat.swimming_pool %}<li>Swimming Pool</li>{% endif %}
+    {% if flat.wifi %}<li>Wi-Fi</li>{% endif %}
+    {% if flat.pets_allowed %}<li>Pets Allowed</li>{% endif %}
+  </ul>
+
+  <p><strong>Listed by:</strong> {{ flat.listed_by.email }}</p>
+  <p><strong>Listed on:</strong> {{ flat.listed_on }}</p>
+{% endblock content %}
