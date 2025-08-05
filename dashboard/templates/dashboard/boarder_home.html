@@ -10,6 +10,21 @@ Boarder
 <h2>Available Flats:-</h2>
 <hr>
 
+<form method="get" class="row mb-3">
+    <div class="col-md-3">
+    {{ form.state.label_tag }} {{ form.state }}
+    </div>
+    <div class="col-md-3">
+    {{ form.city.label_tag }} {{ form.city }}
+    </div>
+    <div class="col-md-3">
+    {{ form.bhk.label_tag }} {{ form.bhk }}
+    </div>
+    <div class="col-md-3 mt-4">
+    <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
 {% if all_flats %}
     <div class="flats-container">
         {% for flat in all_flats %}
@@ -30,4 +45,31 @@ Boarder
 {% else %}
     <p>No flats listed yet.</p>
 {% endif %}
+
+{% block scripts %}
+<script>
+    const stateField = document.querySelector('#id_state');
+    const cityField = document.querySelector('#id_city');
+
+    stateField.addEventListener('change', function () {
+        const selectedState = this.value;
+        const cityOptions = cityField.options;
+
+        for (let i = 0; i < cityOptions.length; i++) {
+            const option = cityOptions[i];
+            const state = option.getAttribute('data-state');
+
+            if (!state || state === selectedState) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        }
+
+        cityField.value = '';
+    });
+</script>
+{% endblock scripts %}
+
+
 {% endblock content %}

@@ -101,6 +101,7 @@ def Signup(request):
             user.set_password(raw_pass)
             role = form.cleaned_data.get('role')
             user.username = username
+            user.role=role
             user.save()
             assign_permission(user,role)
             send_activation_email(user)
@@ -164,9 +165,9 @@ def google_role_redirect(request):
         return redirect('select_role')
     
     # Redirect based on role
-    if user.role == 'Landlord':
+    if user.role == 'landlord':
         return redirect('landlord_dashboard')
-    elif user.role == 'Boarder':
+    elif user.role == 'boarder':
         return redirect('boarder_dashboard')
     else:
         return redirect('select_role')
@@ -176,10 +177,10 @@ def select_role(request):
     user = request.user
     if request.method == 'POST':
         role = request.POST.get('role')
-        if role in ['Landlord', 'Boarder']:
+        if role in ['landlord', 'boarder']:
             user.role = role
             user.save()
-            return redirect('landlord_dashboard' if role == 'Landlord' else 'boarder_dashboard')
+            return redirect('landlord_dashboard' if role == 'landlord' else 'boarder_dashboard')
         else:
             messages.error(request, "Please select a valid role.")
     return render(request, 'accounts/select_role.html')    

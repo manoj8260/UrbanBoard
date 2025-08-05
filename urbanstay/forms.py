@@ -90,9 +90,46 @@ class FlatFrom(forms.ModelForm):
             try:
                 self.fields['city'].choices = [(city, city) for city in INDIAN_STATES_CITIES[self.instance.state]]
             except (KeyError, TypeError):
-                 self.fields['city'].choices = [('Select', 'Select')]
+                self.fields['city'].choices = [('Select', 'Select')]
 
 class FlatEditForm(forms.ModelForm):
     class Meta: 
         model = Flat
         exclude = ['listed_by', 'listed_on', 'updated_on']
+        
+
+BHK_CHOICES = [
+    ('', 'Any BHK'),
+    (1, '1 BHK'),
+    (2, '2 BHK'),
+    (3, '3 BHK'),
+    (4, '4 BHK'),
+    (5, '5+ BHK'),
+]
+
+class FlatFilterForm(forms.Form):
+    state = forms.ChoiceField(
+        choices=[('', 'Any State')] + [(state, state) for state in INDIAN_STATES_CITIES.keys()],
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    city = forms.ChoiceField(
+        choices=[('', 'Any City')],
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    bhk = forms.ChoiceField(
+        choices=BHK_CHOICES,
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if 'state' in self.data:
+            state = self.data.get('state')
+            if state in INDIAN_STATES_CITIES:
+                self.fields['city'].choices = [('', 'Any City')] + [
+                    (city, city) for city in INDIAN_STATES_CITIES[state]
+                ]

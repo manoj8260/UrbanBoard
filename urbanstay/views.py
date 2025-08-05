@@ -7,7 +7,7 @@ from urbanstay.models import Flat
 from urbanstay.forms import FlatEditForm ,FlatFrom 
 from django.contrib.auth.mixins import LoginRequiredMixin ,UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
-from urbanstay.forms import FlatFrom,INDIAN_STATES_CITIES
+from urbanstay.forms import FlatFrom,INDIAN_STATES_CITIES,FlatFilterForm
 from urbanstay.models import Flat,Booking
 from django.contrib import messages
 # Create your views here.
@@ -25,8 +25,8 @@ class EditFlatView(UpdateView , LoginRequiredMixin,UserPassesTestMixin):
     success_url  = reverse_lazy('landlord_dashboard')
     
     def test_func(self):
-     flat = self.get_object()
-     return self.request.user == flat.listed_by
+        flat = self.get_object()
+        return self.request.user == flat.listed_by
 
 class DeleteFlatView(DeleteView ,LoginRequiredMixin,UserPassesTestMixin):
     model = Flat
@@ -65,4 +65,23 @@ def book_flat(request,flat_id):
         else:
             Booking.objects.create(flat=flat,boarder=request.user)
             messages.success(request,'Your booking request has been sent!')
-        return render(request,'Flat/booking_successful.html',{'flat':flat})    
+        return render(request,'Flat/booking_successful.html',{'flat':flat})  
+    
+    
+def flat_list(request):
+    flats = Flat.objects.all()
+    form = FlatFilterForm(request.GET)
+
+    if form.is_valid():
+        state = form.cleaned_data.get('state')
+        city = form.cleaned_data.get('city')
+        bhk = form.cleaned_data.get('bhk')
+
+        if state:
+            flats = flats.filter(state__iexact=state)
+        if city:
+            flats = flats.filter(city__iexact=city)
+        if bhk:
+            flats = flats.filter(bhk=bhk)
+
+    return render(request, 'dashboard/boarder_home.html', {'form': form, 'flats': flats})
