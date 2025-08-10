@@ -3,12 +3,14 @@ from accounts.views import Signup,Signin,home,Logout ,password_reset_request,pas
 from .views import Signup,Signin,home,Logout,activate_account
 from .views import clear_sesion
 urlpatterns = [
-    path('',Signup,name='signup'),
+    path('',home,name='home'),
+    path('register/',Signup,name='signup'),
     path('login/',Signin,name='signin'),
-    path('home/',home,name='home'),
     path('logout/',Logout,name='signout'),
-     path('google_redirect/', google_role_redirect, name='google_redirect'),
-    path('select_role/', select_role, name='select_role'),   
+    
+    path('google_redirect/', google_role_redirect, name='google_redirect'),
+    path('select_role/', select_role, name='select_role'), 
+      
     #forget password  urls
     path("password-reset/", password_reset_request, name="password_reset"),
     path("password-reset/done/", password_reset_done, name="password_reset_done"),
