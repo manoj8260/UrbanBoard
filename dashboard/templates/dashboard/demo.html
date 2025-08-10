@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Welcome Back</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Login - Your App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,21 +12,27 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f0c29 0%, #24243e 50%, #2d1b69 100%);
+        .main-content {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 100px 20px 50px; /* Top padding for navbar, bottom for footer */
+            min-height: calc(100vh - 75px); /* Account for navbar height */
+        } 
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #24243e 50%, #2d1b69 100%);
             position: relative;
-            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
@@ -36,17 +42,19 @@
                 radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
             animation: backgroundShift 25s ease-in-out infinite;
-        }
+            z-index: -1;
+        } 
 
         @keyframes backgroundShift {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.8; }
         } 
+
         .login-container {
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 420px;
+            max-width: 500px;
         }
 
         .login-box {
@@ -179,29 +187,6 @@
             color: #a855f7;
         }
 
-        .form-label {
-            position: absolute;
-            left: 48px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-            font-size: 1rem;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            background: transparent;
-        }
-
-        .form-group input:focus + .form-label,
-        .form-group input:not(:placeholder-shown) + .form-label {
-            top: -8px;
-            left: 12px;
-            font-size: 0.75rem;
-            color: #667eea;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 0 8px;
-            border-radius: 4px;
-        }
-
         .links {
             text-align: right;
             margin-bottom: 24px;
@@ -248,7 +233,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            margin-bottom: 24px;
+            margin-bottom: 15px;
         }
 
         .submit-btn::before {
@@ -277,7 +262,7 @@
 
         .divider {
             text-align: center;
-            margin: 24px 0;
+            margin: 10px 0;
             position: relative;
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
@@ -396,13 +381,40 @@
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 20px;
-            color: #d70015;
+            color: #ff6b6b;
             font-size: 0.9rem;
             backdrop-filter: blur(10px);
         }
 
+        /* Django form error styling */
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .errorlist li {
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Help text styling */
+        .helptext {
+            display: none; /* Hide help text as we're using floating labels */
+        }
+
         /* Responsive Design */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 100px 15px 30px;
+            }
+
             .login-box {
                 padding: 32px 24px;
                 margin: 0 16px;
@@ -426,50 +438,6 @@
 
             .submit-btn {
                 padding: 14px;
-            }
-        }
-
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            .login-box {
-                background: rgba(30, 30, 30, 0.95);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .login-box h1 {
-                color: #ffffff;
-            }
-
-            .login-box p {
-                color: #cccccc;
-            }
-
-            .form-group input {
-                background: rgba(255, 255, 255, 0.1);
-                color: #ffffff;
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-
-            .form-group input:focus {
-                background: rgba(255, 255, 255, 0.15);
-            }
-
-            .form-label {
-                color: #999999;
-            }
-
-            .google-btn {
-                background: rgba(255, 255, 255, 0.1);
-                color: #ffffff;
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-
-            .google-btn:hover {
-                background: rgba(255, 255, 255, 0.15);
-            }
-
-            .signup-link {
-                color: #cccccc;
             }
         }
 
@@ -500,167 +468,99 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-box">
-            <h1>Welcome Back</h1>
-            <p>Enter your credentials to access your account.</p>
-            
-            <!-- Error messages section -->
-            <div class="error-messages" style="display: none;">
-                <!-- Django form errors will be displayed here -->
+    <div class="main-content">
+        <div class="login-container">
+            <div class="login-box">
+                <h1>Welcome Back</h1>
+                <p>Sign in to your account to continue</p>
+
+                <!-- Display non-field errors -->
+                {% if form.non_field_errors %}
+                    <div class="error-messages">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'login' %}" id="loginForm">
+                    {% csrf_token %}
+                    
+                    <!-- Username Field -->
+                    <div class="form-group">
+                        <i class="fas fa-user input-icon"></i>
+                        {{ form.username }}
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Email or Phone</label>
+                        {{ form.username.errors }}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        {{ form.password }}
+                        <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                        {{ form.password.errors }}
+                    </div>
+
+                    <div class="links">
+                        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="divider">Or</div>
+
+                <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-btn">
+                    <svg width="22" height="22" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span>Continue with Google</span>
+                </a>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+                </div>
             </div>
-            
-            <form action="{% url 'signin' %}" method="post">
-                {% csrf_token %}
-
-                <div class="form-group">
-                    <i class="fa-solid fa-envelope input-icon"></i>
-                    <input type="email" name="username" id="id_username" placeholder="Email or Phone" required>
-                    <label for="id_username" class="form-label">Email or Phone</label>
-                </div>
-
-                <div class="form-group">
-                    <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" name="password" id="id_password" placeholder="Password" required>
-                    <label for="id_password" class="form-label">Password</label>
-                </div>
-                
-                <div class="links">
-                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
-                </div>
-
-                <button type="submit" class="submit-btn">Sign In</button>
-            </form>
-
-            <div class="divider">OR</div>
-
-            <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
-                <span>Continue with Google</span>
-            </a>
-            
-            <p class="signup-link">
-                Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
-            </p>
         </div>
     </div>
 
     <script>
-        // Enhanced form interactions
+        // Form submission with loading state
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = '';
+        });
+
+        // Auto-focus first empty field
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            const submitBtn = document.querySelector('.submit-btn');
-            const inputs = document.querySelectorAll('input');
-
-            // Add loading state on form submission
-            form.addEventListener('submit', function(e) {
-                submitBtn.classList.add('loading');
-                submitBtn.textContent = '';
-            });
-
-            // Enhanced input focus animations
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.style.transform = 'scale(1.02)';
-                });
-
-                input.addEventListener('blur', function() {
-                    this.parentElement.style.transform = 'scale(1)';
-                });
-
-                // Real-time validation feedback
-                input.addEventListener('input', function() {
-                    if (this.validity.valid && this.value.length > 0) {
-                        this.style.borderColor = '#22c55e';
-                        this.style.boxShadow = '0 0 0 3px rgba(34, 197, 148, 0.1)';
-                    } else if (this.value.length > 0 && !this.validity.valid) {
-                        this.style.borderColor = '#ef4444';
-                        this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
-                    } else {
-                        this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                        this.style.boxShadow = 'none';
-                    }
-                });
-
-                // Initialize label position based on input value
-                function checkInputValue() {
-                    const label = input.nextElementSibling;
-                    if (input.value || input === document.activeElement) {
-                        label.style.top = '-12px';
-                        label.style.left = '12px';
-                        label.style.fontSize = '0.75rem';
-                        label.style.fontWeight = '600';
-                        label.style.color = input === document.activeElement ? '#a855f7' : '#38bdf8';
-                        label.style.background = 'rgba(15, 12, 41, 0.9)';
-                        label.style.padding = '4px 8px';
-                        label.style.borderRadius = '6px';
-                    } else {
-                        label.style.top = '50%';
-                        label.style.left = '48px';
-                        label.style.fontSize = '1rem';
-                        label.style.fontWeight = '400';
-                        label.style.color = 'rgba(255, 255, 255, 0.6)';
-                        label.style.background = 'transparent';
-                        label.style.padding = '0';
-                        label.style.borderRadius = '0';
-                    }
-                }
-
-                // Check initial state
-                checkInputValue();
-
-                // Add event listeners for dynamic behavior
-                input.addEventListener('focus', checkInputValue);
-                input.addEventListener('blur', checkInputValue);
-                input.addEventListener('input', checkInputValue);
-            });
-
-            // Add ripple effect to buttons
-            function createRipple(event) {
-                const button = event.currentTarget;
-                const ripple = document.createElement('span');
-                const rect = button.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = event.clientX - rect.left - size / 2;
-                const y = event.clientY - rect.top - size / 2;
-                
-                ripple.style.cssText = `
-                    position: absolute;
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${x}px;
-                    top: ${y}px;
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 50%;
-                    transform: scale(0);
-                    animation: ripple-animation 0.6s ease-out;
-                    pointer-events: none;
-                `;
-                
-                button.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+            const usernameField = document.getElementById('username');
+            const passwordField = document.getElementById('password');
+            
+            if (!usernameField.value) {
+                usernameField.focus();
+            } else if (!passwordField.value) {
+                passwordField.focus();
             }
+        });
 
-            // Add ripple CSS animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes ripple-animation {
-                    to {
-                        transform: scale(4);
-                        opacity: 0;
-                    }
+        // Enhanced floating label behavior
+        document.querySelectorAll('.form-group input').forEach(input => {
+            // Check if field has value on page load
+            if (input.value) {
+                input.classList.add('has-value');
+            }
+            
+            input.addEventListener('blur', function() {
+                if (this.value) {
+                    this.classList.add('has-value');
+                } else {
+                    this.classList.remove('has-value');
                 }
-            `;
-            document.head.appendChild(style);
-
-            // Apply ripple effect to buttons
-            document.querySelectorAll('.submit-btn, .google-btn').forEach(button => {
-                button.style.position = 'relative';
-                button.style.overflow = 'hidden';
-                button.addEventListener('click', createRipple);
             });
         });
     </script>

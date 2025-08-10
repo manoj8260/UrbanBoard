@@ -1,3 +1,11 @@
+ .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 50px; /* Top padding for navbar, bottom for footer */
+            min-height: calc(100vh - 75px); /* Account for navbar height */
+        } 
 
 
         body {
@@ -30,15 +38,7 @@
         } 
 
         /* Main Content Area */
-        .main-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 100px 20px 50px; /* Top padding for navbar, bottom for footer */
-            min-height: calc(100vh - 75px); /* Account for navbar height */
-        }
-
+       
         .login-container {
             position: relative;
             z-index: 1;

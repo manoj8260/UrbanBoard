@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
 from .models import User
-from .forms import Signupform,LoginForm
+from .forms import SignupForm,LoginForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -93,7 +93,7 @@ def password_reset_complete(request):
 # Create your views here.
 def Signup(request):
     if request.method=='POST':
-        form=Signupform(request.POST)
+        form=SignupForm(request.POST)
         if form.is_valid():
             user=form.save(commit=False)
             raw_pass=form.cleaned_data.get('password')
@@ -107,7 +107,7 @@ def Signup(request):
             messages.success(request,'Successfully registered..')
             return render(request,'accounts/activation_pending.html')
     else:
-        form=Signupform()
+        form=SignupForm()
     return render(request,'accounts/signup.html',{'form':form})
 
 def Signin(request):
