@@ -40,11 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'dashboard',
     'accounts',
     'core',
-    'urbanstay',
-    'social_django',
+    'Flat',
 ]
 
 MIDDLEWARE = [

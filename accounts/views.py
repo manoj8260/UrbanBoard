@@ -121,7 +121,7 @@ def Signin(request):
             if user is not None:
                 login(request,user)
                 request.session['identifier'] = identifier
-                messages.success(request,'user logined...')
+                messages.success(request,'user logined...')               
                 if user.role=='landlord':
                     return redirect('landlord_dashboard')
                 elif user.role=='boarder':
@@ -139,7 +139,7 @@ def Logout(request):
     logout(request)
     return redirect('signup')
 
-@login_required
+# @login_required
 def home(request):   
     return render(request,'accounts/home.html')
 

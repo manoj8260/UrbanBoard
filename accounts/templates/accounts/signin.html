@@ -3,7 +3,7 @@
 {% block title %}Login{% endblock title %}
 
 {% block head %}
-<link rel="stylesheet" href="{%static 'CSS/signin.css' %}">
+<link rel="stylesheet" href="{%static 'accounts/css/signin.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 {% endblock head %}
 
@@ -67,4 +67,7 @@
         </div>
    
 {% endblock content %}
-<link rel="stylesheet" href="{%static 'JS/signin.js' %}">
+
+{% block scripts %}
+    <link rel="stylesheet" href="{%static 'accounts/js/signin.js' %}">
+{% endblock scripts %}

@@ -24,5 +24,5 @@ urlpatterns = [
     path('',include('accounts.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
-    path('urbanstay/',include('urbanstay.urls')) , 
+    path('Flat/',include('Flat.urls')) , 
 ]+static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

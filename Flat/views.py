@@ -3,12 +3,12 @@ from django.http import JsonResponse
 from django.views.generic import UpdateView ,DeleteView,DetailView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from urbanstay.models import Flat
-from urbanstay.forms import FlatEditForm ,FlatFrom 
+from Flat.models import Flat
+from Flat.forms import FlatEditForm ,FlatFrom 
 from django.contrib.auth.mixins import LoginRequiredMixin ,UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
-from urbanstay.forms import FlatFrom,INDIAN_STATES_CITIES,FlatFilterForm
-from urbanstay.models import Flat,Booking
+from Flat.forms import FlatFrom,INDIAN_STATES_CITIES,FlatFilterForm
+from Flat.models import Flat,Booking
 from django.contrib import messages
 # Create your views here.
 
@@ -84,4 +84,4 @@ def flat_list(request):
         if bhk:
             flats = flats.filter(bhk=bhk)
 
-    return render(request, 'dashboard/boarder_home.html', {'form': form, 'flats': flats})
+    return render(request, 'dashboard/boarder_daskboard.html', {'form': form, 'flats': flats})
