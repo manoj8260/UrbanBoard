@@ -1,145 +1,91 @@
 {% extends "base.html" %}
 {%load static%}
-{% block title %}Homepage{% endblock title %}
- {% block head %}
-    <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
-{% endblock %}
+{% block title %}home{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'CSS/home.css' %}">
+{% endblock head %}
 
 {% block content %}
-  <main>
-        <!-- HERO SECTION -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1>Find Your Next Perfect Place</h1>
-                <p>Modern apartments, hassle-free booking.</p>
-
-                <!-- Search Bar -->
-                 <form class="search-bar-container" id="searchForm">
-        <div class="search-field">
-            <label for="searchInputLocation" class="sr-only">Location</label>
-            <i class="fa-solid fa-location-dot"></i>
-            <input type="text" id="searchInputLocation" placeholder="Search by location">
-        </div>
-
-        <div class="search-field">
-            <label for="searchInputDate" class="sr-only">Date</label>
-            <i class="fa-solid fa-calendar-days"></i>
-            <input type="date" id="searchInputDate">
-        </div>
-
-        <div class="search-field select-wrapper">
-            <label for="searchInputBhk" class="sr-only">BHK Type</label>
-            <i class="fa-solid fa-bed"></i>
-            <select id="searchInputBhk">
-                <option value="">Any BHK</option>
-                <option value="1">1 BHK</option>
-                <option value="2">2 BHK</option>
-                <option value="3">3 BHK</option>
-                <option value="4+">4+ BHK</option>
-            </select>
-        </div>
-
-        <button type="submit" id="searchButton" class="search-button" aria-label="Search">
-            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-        </button>
-    </form>
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Find Your Perfect Room</h1>
+            <p>Connect landlords and boarders for seamless boarding house management</p>
+            <div class="hero-buttons">
+                <a href="{%url 'signin'%}" class="btn btn-primary" onclick="openModal('signup')">Get Started</a>
+                <a href="#properties" class="btn btn-secondary">Browse Properties</a>
             </div>
-        </section>
-
-        <!-- LISTINGS & FILTERS -->
-        <section class="listings-section">
-            <div class="container">
-                <!-- Filters -->
-                <div class="filters-container">
-                    <h2>Filter Listings</h2>
-                    <div class="filter-group">
-                        <label for="filterPrice">Price Range (per month)</label>
-                        <input type="range" id="filterPrice" min="20000" max="200000" step="5000" value="200000">
-                        <span id="priceValue">₹200,000</span>
-                    </div>
-                    <div class="filter-group">
-                        <label>BHK</label>
-                        <div class="button-group" id="filterBhk">
-                            <button class="filter-btn active" data-value="">All</button>
-                            <button class="filter-btn" data-value="1">1</button>
-                            <button class="filter-btn" data-value="2">2</button>
-                            <button class="filter-btn" data-value="3">3</button>
-                            <button class="filter-btn" data-value="4">4+</button>
-                        </div>
-                    </div>
-                    <div class="filter-group">
-                        <label>Furnishing</label>
-                        <div class="button-group" id="filterFurnished">
-                            <button class="filter-btn active" data-value="">Any</button>
-                            <button class="filter-btn" data-value="furnished">Furnished</button>
-                            <button class="filter-btn" data-value="semi-furnished">Semi-Furnished</button>
-                        </div>
-                    </div>
-                    <button id="resetFilters" class="reset-button">Reset Filters</button>
+        </div>
+    </section>
+    <section class="features" id="about">
+        <div class="container">
+            <h2 class="section-title">Why Choose BoardingHub?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏠</div>
+                    <h3>Property Management</h3>
+                    <p>Easy-to-use tools for landlords to manage properties, tenants, and rental activities efficiently.</p>
                 </div>
-
-                <!-- Apartment Listings -->
-                <div class="listings-grid-container">
-                    <div class="listings-header">
-                        <h2 id="listingsTitle">Showing All Apartments</h2>
-                        <!-- Theme Toggle -->
-                        <div class="theme-switch-wrapper">
-                            <label class="theme-switch" for="theme-checkbox">
-                                <input type="checkbox" id="theme-checkbox">
-                                <div class="slider round">
-                                    <i class="fa-solid fa-sun sun-icon"></i>
-                                    <i class="fa-solid fa-moon moon-icon"></i>
-                                </div>
-                            </label>
-                        </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h3>Secure Payments</h3>
+                    <p>Safe and convenient online rent payment system with automatic tracking and receipts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Communication Hub</h3>
+                    <p>Built-in messaging system for seamless communication between landlords and boarders.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analytics & Reports</h3>
+                    <p>Comprehensive reporting tools to track earnings, occupancy rates, and property performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Maintenance Requests</h3>
+                    <p>Streamlined maintenance request system for quick resolution of property issues.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Platform</h3>
+                    <p>Your data is protected with enterprise-level security and privacy measures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+     <section class="properties-preview" id="properties">
+        <div class="container">
+            <h2 class="section-title">Featured Properties</h2>
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-image">📷 Property Image</div>
+                    <div class="property-info">
+                        <div class="property-price">₹8,000/month</div>
+                        <h3>Cozy Single Room</h3>
+                        <p>📍 Hyderabad, Telangana</p>
+                        <p>Fully furnished room with WiFi, AC, and meals included. Perfect for working professionals.</p>
                     </div>
-                    <div id="listingsGrid" class="listings-grid">
-                        <!-- Sample apartment cards -->
-                        <div class="apartment-card">
-                            <div class="apartment-image">
-                                <i class="fa-solid fa-building"></i>
-                            </div>
-                            <div class="apartment-info">
-                                <h3>Modern 2BHK in Bandra</h3>
-                                <div class="apartment-price">₹45,000/month</div>
-                                <p>Fully furnished apartment with modern amenities</p>
-                            </div>
-                        </div>
-                        <div class="apartment-card">
-                            <div class="apartment-image">
-                                <i class="fa-solid fa-building"></i>
-                            </div>
-                            <div class="apartment-info">
-                                <h3>Luxury 3BHK in Juhu</h3>
-                                <div class="apartment-price">₹75,000/month</div>
-                                <p>Sea-facing luxury apartment with premium facilities</p>
-                            </div>
-                        </div>
-                        <div class="apartment-card">
-                            <div class="apartment-image">
-                                <i class="fa-solid fa-building"></i>
-                            </div>
-                            <div class="apartment-info">
-                                <h3>Cozy 1BHK in Andheri</h3>
-                                <div class="apartment-price">₹28,000/month</div>
-                                <p>Compact and well-designed for young professionals</p>
-                            </div>
-                        </div>
-                        <div class="apartment-card">
-                            <div class="apartment-image">
-                                <i class="fa-solid fa-building"></i>
-                            </div>
-                            <div class="apartment-info">
-                                <h3>Spacious 4BHK in Powai</h3>
-                                <div class="apartment-price">₹95,000/month</div>
-                                <p>Family-friendly apartment with garden view</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="property-card">
+                    <div class="property-image">📷 Property Image</div>
+                    <div class="property-info">
+                        <div class="property-price">₹12,000/month</div>
+                        <h3>Premium Double Room</h3>
+                        <p>📍 Gachibowli, Hyderabad</p>
+                        <p>Spacious room with attached bathroom, balcony access, and premium amenities.</p>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <div class="property-image">📷 Property Image</div>
+                    <div class="property-info">
+                        <div class="property-price">₹15,000/month</div>
+                        <h3>Executive Suite</h3>
+                        <p>📍 HITEC City, Hyderabad</p>
+                        <p>Luxury accommodation with private bathroom, workspace, and housekeeping services.</p>
                     </div>
                 </div>
             </div>
-        </section>
-
-    
-                    
+        </div>
+    </section>
 {% endblock content %}

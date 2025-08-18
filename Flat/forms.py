@@ -50,7 +50,8 @@ class FlatFrom(forms.ModelForm):
     city  = forms.ChoiceField(choices=[('Select','Select')] , required=True , widget=forms.Select(attrs={'class' : 'form-control'}))
     class Meta:
         model = Flat
-        exclude = ('listed_by', 'is_available')
+        
+        fields =['title' ,'description' ,'bhk', 'furnishing','state','city' ,'rent', 'available_from']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{%load static%}
+{% block title %}boarder daskboard{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{%static 'css\boarder_daskboard.css' %}">
+{% endblock head %}
+
+{% block content %}
+  <main>
+        <section class="banner-area">
+            <div class="banner-wrapper">
+                <h1>Find Your Next Perfect Place</h1>
+                <p>Modern apartments, hassle-free booking.</p>
+
+                <div class="search-widget glass-style">
+                    <div class="input-field">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="locationSearchField" placeholder="Search by location (e.g., Mumbai)">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <input type="date" id="dateSearchField">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-bed"></i>
+                        <select id="bhkSearchField">
+                            <option value="">Any BHK</option>
+                            <option value="1">1 BHK</option>
+                            <option value="2">2 BHK</option>
+                            <option value="3">3 BHK</option>
+                            <option value="4">4+ BHK</option>
+                        </select>
+                    </div>
+                    <button id="searchActionButton" class="search-action-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="property-showcase">
+            <div class="main-wrapper">
+                <div class="filter-panel">
+                    <h2>Filter Listings</h2>
+                    <div class="filter-category">
+                        <label for="priceRangeSlider">Price Range (per month)</label>
+                        <input type="range" id="priceRangeSlider" min="20000" max="200000" step="5000" value="200000">
+                        <span id="priceDisplayValue">₹200,000</span>
+                    </div>
+                    <div class="filter-category">
+                        <label>BHK</label>
+                        <div class="option-buttons" id="bhkFilterOptions">
+                            <button class="option-btn selected" data-value="">All</button>
+                            <button class="option-btn" data-value="1">1</button>
+                            <button class="option-btn" data-value="2">2</button>
+                            <button class="option-btn" data-value="3">3</button>
+                            <button class="option-btn" data-value="4">4+</button>
+                        </div>
+                    </div>
+                    <div class="filter-category">
+                        <label>Furnishing</label>
+                        <div class="option-buttons" id="furnishingFilterOptions">
+                            <button class="option-btn selected" data-value="">Any</button>
+                            <button class="option-btn" data-value="furnished">Furnished</button>
+                            <button class="option-btn" data-value="semi-furnished">Semi-Furnished</button>
+                        </div>
+                    </div>
+                    <button id="clearAllFilters" class="clear-filters-btn">Reset Filters</button>
+                </div>
+
+                <div class="property-display-area">
+                    <div class="display-header">
+                        <h2 id="propertyDisplayTitle">Showing All Apartments</h2>
+                        <div class="theme-toggle-container">
+                            <label class="mode-switcher" for="darkModeToggle">
+                                <input type="checkbox" id="darkModeToggle">
+                                <div class="toggle-slider round">
+                                    <i class="fa-solid fa-sun light-icon"></i>
+                                    <i class="fa-solid fa-moon dark-icon"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="propertyListingsGrid" class="property-grid">
+                        <div class="property-item">
+                            <div class="property-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" alt="Modern Apartment">
+                            </div>
+                            <div class="property-details">
+                                <h3>Modern 2BHK in Bandra</h3>
+                                <div class="property-cost">₹75,000 / month</div>
+                                <p>Bandra West, Mumbai</p>
+                            </div>
+                        </div>
+                        <div class="property-item">
+                            <div class="property-thumbnail">
+                               <img src="https://images.unsplash.com/photo-1613553483054-e6656c2a8044" alt="City View Apartment">
+                            </div>
+                            <div class="property-details">
+                                <h3>Studio Apartment with City View</h3>
+                                <div class="property-cost">₹45,000 / month</div>
+                                <p>Koramangala, Bengaluru</p>
+                            </div>
+                        </div>
+                        <div class="property-item">
+                            <div class="property-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267" alt="Luxury Penthouse">
+                            </div>
+                            <div class="property-details">
+                                <h3>Luxury 3BHK Penthouse</h3>
+                                <div class="property-cost">₹150,000 / month</div>
+                                <p>DLF Phase 5, Gurgaon</p>
+                            </div>
+                        </div>
+                        <div class="property-item">
+                            <div class="property-thumbnail">
+                               <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688" alt="Cozy Studio">
+                            </div>
+                            <div class="property-details">
+                                <h3>Cozy 1BHK near Metro</h3>
+                                <div class="property-cost">₹30,000 / month</div>
+                                <p>Saket, New Delhi</p>
+                            </div>
+                        </div>
+                         <div class="property-item">
+                            <div class="property-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Family Home">
+                            </div>
+                            <div class="property-details">
+                                <h3>Spacious 3BHK Family Home</h3>
+                                <div class="property-cost">₹90,000 / month</div>
+                                <p>Jubilee Hills, Hyderabad</p>
+                            </div>
+                        </div>
+                         <div class="property-item">
+                            <div class="property-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c" alt="Compact Apartment">
+                            </div>
+                            <div class="property-details">
+                                <h3>Compact 1BHK for Students</h3>
+                                <div class="property-cost">₹25,000 / month</div>
+                                <p>Hinjewadi, Pune</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonial-area">
+            <div class="main-wrapper">
+                <h2>What Our Clients Say</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-item">
+                        <div class="testimonial-profile">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma" class="profile-image">
+                            <div>
+                                <h4>Priya Sharma</h4>
+                                <div class="rating-stars">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p>"UrbanBoard made finding my new apartment in Bengaluru a breeze. The filters are so precise, and I found the perfect place in just a day!"</p>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="testimonial-profile">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rohan Mehra" class="profile-image">
+                            <div>
+                                <h4>Rohan Mehra</h4>
+                                <div class="rating-stars">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p>"The best platform for apartment hunting. The user interface is clean, and the variety of listings is fantastic. Highly recommended."</p>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="testimonial-profile">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Anjali Desai" class="profile-image">
+                            <div>
+                                <h4>Anjali Desai</h4>
+                                <div class="rating-stars">
+                                   <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p>"I was relocating to Mumbai for work and was stressed about finding a place. UrbanBoard's detailed listings and virtual tours were a lifesaver."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-area">
+             <div class="main-wrapper">
+                <h2>From Our Blog</h2>
+                <div class="blog-grid">
+                    <div class="blog-item">
+                        <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb" alt="Interior Design" class="blog-thumbnail">
+                        <div class="blog-text">
+                             <h3>Top 10 Interior Design Trends for Small Apartments</h3>
+                             <p>Maximize your space with these clever design tips that blend style and functionality, perfect for urban living.</p>
+                             <a href="#" class="continue-reading">Continue Reading <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                     <div class="blog-item">
+                        <img src="https://images.unsplash.com/photo-1516156008657-3a623426534c" alt="Rental Agreement" class="blog-thumbnail">
+                        <div class="blog-text">
+                             <h3>A Renter's Guide to Understanding Your Lease Agreement</h3>
+                             <p>Don't get caught out by hidden clauses. We break down the essential components of a standard rental lease.</p>
+                             <a href="#" class="continue-reading">Continue Reading <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                     <div class="blog-item">
+                        <img src="https://images.unsplash.com/photo-1605283136573-5094f58782f9" alt="City Living" class="blog-thumbnail">
+                        <div class="blog-text">
+                             <h3>The Pros and Cons of Living in a Gated Community</h3>
+                             <p>Is a gated community right for you? We weigh the benefits of security and amenities against the potential drawbacks.</p>
+                             <a href="#" class="continue-reading">Continue Reading <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{%static 'js\boarder_daskboard.js' %}"></script>
+{% endblock scripts %}

@@ -1,4 +1,4 @@
-from urbanstay.models import Flat
+from Flat.models import Flat
 
 PERMISSION_CONFIG = {
     'boarder' :{

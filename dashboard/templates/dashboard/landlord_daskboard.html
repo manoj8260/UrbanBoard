@@ -1,0 +1,399 @@
+{% extends "base2.html" %}
+{%load static%}
+{% block title %}LandLord daskboard{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{%static 'css\landlord_daskboard.css' %}">
+{% endblock head %}
+
+{% block maincontent %}
+ 
+            <div class="header">
+                <div class="welcome-text">
+                    <h1>Welcome back, John!</h1>
+                    <p>Manage your properties and tenants efficiently</p>
+                </div>
+                <div class="user-actions">
+                     <form action="{%url 'create_flat_listing'%}" method="get">
+                                    <button class="btn btn-primary" >+ Add Property</button>
+                     </form>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span>👤 John Doe</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🏠</div>
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Total Properties</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">Active Boarders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-number">₹2,45,000</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-number">87%</div>
+                        <div class="stat-label">Occupancy Rate</div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h2 style="margin-bottom: 1rem;">Recent Activities</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Property</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>New Application Received</td>
+                                <td>Cozy Single Room - Gachibowli</td>
+                                <td>Today, 2:30 PM</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>Rent Payment Received</td>
+                                <td>Premium Double Room - HITEC City</td>
+                                <td>Today, 10:15 AM</td>
+                                <td><span class="status-badge status-paid">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance Request</td>
+                                <td>Executive Suite - Madhapur</td>
+                                <td>Yesterday, 4:45 PM</td>
+                                <td><span class="status-badge status-pending">In Progress</span></td>
+                            </tr>
+                            <tr>
+                                <td>New Boarder Check-in</td>
+                                <td>Single Room - Kondapur</td>
+                                <td>2 days ago</td>
+                                <td><span class="status-badge status-paid">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Properties Section -->
+            <div id="properties" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">My Properties</h2>
+                    <button class="btn btn-primary" onclick="openModal('addProperty')">+ Add New Property</button>
+                </div>
+                
+                <div class="properties-grid">
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div>
+                                <div class="property-title">Cozy Single Room</div>
+                                <p>📍 Gachibowli, Hyderabad</p>
+                            </div>
+                            <div class="property-price">₹8,000/mo</div>
+                        </div>
+                        <div class="property-details">
+                            <p>Fully furnished room with WiFi, AC, and meals included.</p>
+                            <div style="margin-top: 0.5rem;">
+                                <span class="property-status status-occupied">Occupied</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                            <button class="btn btn-secondary" onclick="editProperty(1)">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteProperty(1)">Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div>
+                                <div class="property-title">Premium Double Room</div>
+                                <p>📍 HITEC City, Hyderabad</p>
+                            </div>
+                            <div class="property-price">₹12,000/mo</div>
+                        </div>
+                        <div class="property-details">
+                            <p>Spacious room with attached bathroom and balcony.</p>
+                            <div style="margin-top: 0.5rem;">
+                                <span class="property-status status-vacant">Vacant</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                            <button class="btn btn-secondary" onclick="editProperty(2)">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteProperty(2)">Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div>
+                                <div class="property-title">Executive Suite</div>
+                                <p>📍 Madhapur, Hyderabad</p>
+                            </div>
+                            <div class="property-price">₹15,000/mo</div>
+                        </div>
+                        <div class="property-details">
+                            <p>Luxury accommodation with private bathroom and workspace.</p>
+                            <div style="margin-top: 0.5rem;">
+                                <span class="property-status status-occupied">Occupied</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                            <button class="btn btn-secondary" onclick="editProperty(3)">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteProperty(3)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div id="applications" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Rental Applications</h2>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Applicant Name</th>
+                            <th>Property</th>
+                            <th>Applied Date</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rajesh Kumar</td>
+                            <td>Premium Double Room - HITEC City</td>
+                            <td>Aug 10, 2025</td>
+                            <td>+91-9876543210</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <button class="btn btn-primary" onclick="approveApplication(1)">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectApplication(1)">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Priya Sharma</td>
+                            <td>Cozy Single Room - Gachibowli</td>
+                            <td>Aug 9, 2025</td>
+                            <td>+91-9876543211</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <button class="btn btn-primary" onclick="approveApplication(2)">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectApplication(2)">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Anil Reddy</td>
+                            <td>Executive Suite - Madhapur</td>
+                            <td>Aug 8, 2025</td>
+                            <td>+91-9876543212</td>
+                            <td><span class="status-badge status-paid">Approved</span></td>
+                            <td>
+                                <button class="btn btn-secondary">View Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Payments Section -->
+            <div id="payments" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Payment Tracking</h2>
+                    <div>
+                        <select style="padding: 0.5rem; margin-right: 1rem;">
+                            <option>All Properties</option>
+                            <option>Cozy Single Room</option>
+                            <option>Premium Double Room</option>
+                            <option>Executive Suite</option>
+                        </select>
+                        <select style="padding: 0.5rem;">
+                            <option>All Status</option>
+                            <option>Paid</option>
+                            <option>Pending</option>
+                            <option>Overdue</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Boarder Name</th>
+                            <th>Property</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Payment Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Suresh Patel</td>
+                            <td>Executive Suite - Madhapur</td>
+                            <td>₹15,000</td>
+                            <td>Aug 1, 2025</td>
+                            <td>Jul 30, 2025</td>
+                            <td><span class="status-badge status-paid">Paid</span></td>
+                            <td><button class="btn btn-secondary">View Receipt</button></td>
+                        </tr>
+                        <tr>
+                            <td>Meera Singh</td>
+                            <td>Cozy Single Room - Gachibowli</td>
+                            <td>₹8,000</td>
+                            <td>Aug 5, 2025</td>
+                            <td>-</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><button class="btn btn-primary">Send Reminder</button></td>
+                        </tr>
+                        <tr>
+                            <td>Vikram Joshi</td>
+                            <td>Premium Double Room - HITEC City</td>
+                            <td>₹12,000</td>
+                            <td>Aug 3, 2025</td>
+                            <td>-</td>
+                            <td><span class="status-badge status-overdue">Overdue</span></td>
+                            <td><button class="btn btn-danger">Follow Up</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Messages Section -->
+            <div id="messages" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Messages & Communications</h2>
+                    <button class="btn btn-primary" onclick="openModal('newMessage')">+ New Message</button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
+                        <h3>Conversations</h3>
+                        <div style="margin-top: 1rem;">
+                            <div style="padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;" onclick="openConversation(1)">
+                                <strong>Suresh Patel</strong>
+                                <p style="font-size: 0.9rem; color: #666;">AC not working properly...</p>
+                                <small>2 hours ago</small>
+                            </div>
+                            <div style="padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;" onclick="openConversation(2)">
+                                <strong>Meera Singh</strong>
+                                <p style="font-size: 0.9rem; color: #666;">Rent payment query</p>
+                                <small>1 day ago</small>
+                            </div>
+                            <div style="padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;" onclick="openConversation(3)">
+                                <strong>Vikram Joshi</strong>
+                                <p style="font-size: 0.9rem; color: #666;">Internet connection issue</p>
+                                <small>3 days ago</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="chatArea" style="background: #f8f9fa; padding: 1rem; border-radius: 10px; min-height: 400px;">
+                        <div style="text-align: center; color: #666; margin-top: 150px;">
+                            Select a conversation to view messages
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div id="reports" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Reports & Analytics</h2>
+                    <div>
+                        <select style="padding: 0.5rem; margin-right: 1rem;">
+                            <option>Last 30 Days</option>
+                            <option>Last 3 Months</option>
+                            <option>Last 6 Months</option>
+                            <option>Last Year</option>
+                        </select>
+                        <button class="btn btn-secondary">Export PDF</button>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-number">₹7,35,000</div>
+                        <div class="stat-label">Total Revenue (3 Months)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">Average Occupancy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-number">12 days</div>
+                        <div class="stat-label">Average Stay Duration</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-number">4.7</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-top: 2rem;">
+                    <h3>Monthly Revenue Breakdown</h3>
+                    <table class="data-table" style="margin-top: 1rem;">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Properties Occupied</th>
+                                <th>Total Revenue</th>
+                                <th>Growth</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>August 2025</td>
+                                <td>11/12</td>
+                                <td>₹2,45,000</td>
+                                <td style="color: #4CAF50;">+8.2%</td>
+                            </tr>
+                            <tr>
+                                <td>July 2025</td>
+                                <td>10/12</td>
+                                <td>₹2,20,000</td>
+                                <td style="color: #4CAF50;">+12.5%</td>
+                            </tr>
+                            <tr>
+                                <td>June 2025</td>
+                                <td>9/12</td>
+                                <td>₹1,95,000</td>
+                                <td style="color: #4CAF50;">+5.4%</td>
+                            </tr>
+                            <tr>
+                                <td>May 2025</td>
+                                <td>10/12</td>
+                                <td>₹2,10,000</td>
+                                <td style="color: #dc3545;">-2.3%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+{% endblock maincontent %}
+
+{%block scripts%}
+<!-- <script src="{%static 'js\landlord_daskboard.js' %}"></script> -->
+{% endblock scripts %}

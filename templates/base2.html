@@ -1,0 +1,36 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}UrbanBoard - LandLord{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">     
+    <!-- Custom CSS for  -->
+    <link rel="stylesheet" href="{%static 'CSS/slidebar.css'%}">
+    <link rel="stylesheet" href="{%static 'CSS/base2.css'%}">
+
+    {% block head %}
+    
+    {% endblock head %}
+</head>
+<body>
+
+  <div class="container">
+   {% include "includes/slidebar.html" %}
+     <main class="main-content">
+       {% block maincontent %}
+
+      {% endblock maincontent %}
+     </main>
+  
+
+  </div> 
+
+  
+    <script src="{%static 'js\landlord_daskboard.js' %}"></script>
+    {% block scripts %}
+
+    {% endblock scripts %}
+
+</body>
+</html>

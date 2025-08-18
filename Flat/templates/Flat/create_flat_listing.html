@@ -1,0 +1,235 @@
+{% extends "base2.html" %}
+{%load static%}
+{% block title %}create flat{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{%static 'css\landlord_daskboard.css' %}">
+{% endblock head %}
+
+{% block maincontent %}
+  <form action="" method="post">
+    <div class="container">
+        <div class="header">
+            <h1>🏠 List Your Flat</h1>
+            <p>Find the perfect tenant for your property with our comprehensive listing form</p>
+        </div>
+
+        <div class="form-container">
+            <form action="{% url 'create_flat_listing' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Basic Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📝</span>
+                        Basic Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="{{ form.title.id_for_label }}">Property Title <span class="required">*</span></label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="error-message">{{ form.title.errors.0 }}</div>
+                            {% endif %}
+                            <div class="help-text">Create an attractive title that highlights your property's best features</div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="{{ form.description.id_for_label }}">Description</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="error-message">{{ form.description.errors.0 }}</div>
+                            {% endif %}
+                            <div class="help-text">Provide detailed information to attract quality tenants</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property Details Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🏡</span>
+                        Property Details
+                    </h2>
+                    <div class="form-grid-thirds">
+                        <div class="form-group">
+                            <label for="{{ form.bhk.id_for_label }}">BHK Type <span class="required">*</span></label>
+                            {{ form.bhk }}
+                            {% if form.bhk.errors %}
+                                <div class="error-message">{{ form.bhk.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.bathrooms.id_for_label }}">Bathrooms</label>
+                            {{ form.bathrooms }}
+                            {% if form.bathrooms.errors %}
+                                <div class="error-message">{{ form.bathrooms.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.area_sqft.id_for_label }}">Area (Sq Ft)</label>
+                            {{ form.area_sqft }}
+                            {% if form.area_sqft.errors %}
+                                <div class="error-message">{{ form.area_sqft.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="{{ form.furnishing.id_for_label }}">Furnishing <span class="required">*</span></label>
+                            {{ form.furnishing }}
+                            {% if form.furnishing.errors %}
+                                <div class="error-message">{{ form.furnishing.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📍</span>
+                        Location Details
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="{{ form.state.id_for_label }}">State <span class="required">*</span></label>
+                            {{ form.state }}
+                            {% if form.state.errors %}
+                                <div class="error-message">{{ form.state.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.city.id_for_label }}">City <span class="required">*</span></label>
+                            {{ form.city }}
+                            {% if form.city.errors %}
+                                <div class="error-message">{{ form.city.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="{{ form.address.id_for_label }}">Full Address</label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <div class="error-message">{{ form.address.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.pincode.id_for_label }}">Pincode</label>
+                            {{ form.pincode }}
+                            {% if form.pincode.errors %}
+                                <div class="error-message">{{ form.pincode.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">💰</span>
+                        Rental Information
+                    </h2>
+                    <div class="form-grid-thirds">
+                        <div class="form-group">
+                            <label for="{{ form.rent.id_for_label }}">Monthly Rent <span class="required">*</span></label>
+                            <div class="currency-prefix">
+                                {{ form.rent }}
+                            </div>
+                            {% if form.rent.errors %}
+                                <div class="error-message">{{ form.rent.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.deposit.id_for_label }}">Security Deposit</label>
+                            <div class="currency-prefix">
+                                {{ form.deposit }}
+                            </div>
+                            {% if form.deposit.errors %}
+                                <div class="error-message">{{ form.deposit.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.available_from.id_for_label }}">Available From</label>
+                            {{ form.available_from }}
+                            {% if form.available_from.errors %}
+                                <div class="error-message">{{ form.available_from.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amenities Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">⭐</span>
+                        Amenities & Features
+                    </h2>
+                    <div class="amenities-grid">
+                        <div class="checkbox-group">
+                            {{ form.parking }}
+                            <label for="{{ form.parking.id_for_label }}">🚗 Parking Available</label>
+                        </div>
+                        <div class="checkbox-group">
+                            {{ form.lift }}
+                            <label for="{{ form.lift.id_for_label }}">🛗 Elevator/Lift</label>
+                        </div>
+                        <div class="checkbox-group">
+                            {{ form.security }}
+                            <label for="{{ form.security.id_for_label }}">🛡️ 24x7 Security</label>
+                        </div>
+                        <div class="checkbox-group">
+                            {{ form.power_backup }}
+                            <label for="{{ form.power_backup.id_for_label }}">⚡ Power Backup</label>
+                        </div>
+                        <div class="checkbox-group">
+                            {{ form.gym }}
+                            <label for="{{ form.gym.id_for_label }}">🏋️ Gym/Fitness Center</label>
+                        </div>
+                        <div class="checkbox-group">
+                            {{ form.swimming_pool }}
+                            <label for="{{ form.swimming_pool.id_for_label }}">🏊 Swimming Pool</label>
+                        </div>
+                        <div class="checkbox-group">
+                            {{ form.wifi }}
+                            <label for="{{ form.wifi.id_for_label }}">📶 WiFi Available</label>
+                        </div>
+                        <div class="checkbox-group">
+                            {{ form.pets_allowed }}
+                            <label for="{{ form.pets_allowed.id_for_label }}">🐕 Pets Allowed</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Upload Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📷</span>
+                        Property Images
+                    </h2>
+                    <div class="form-group">
+                        <label for="{{ form.image.id_for_label }}">Upload Property Image</label>
+                        <div class="image-upload-area" onclick="document.getElementById('{{ form.image.id_for_label }}').click();">
+                            <div class="image-upload-icon">📸</div>
+                            <div class="image-upload-text">Click to upload property image</div>
+                            <div class="image-upload-hint">JPG, PNG, or GIF (Max 5MB)</div>
+                        </div>
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                            <div class="error-message">{{ form.image.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="submit-container">
+                    <input type="submit" value="LIST YOUR FLAT" class="submit-btn">
+                </div>
+            </form>
+        </div>
+    </div>
+  </form>
+{% endblock maincontent %}
+
+{%block scripts%}
+<!-- <script src="{%static 'js\landlord_daskboard.js' %}"></script> -->
+{% endblock scripts %}
